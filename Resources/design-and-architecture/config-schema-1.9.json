@@ -1,0 +1,93 @@
+{
+  "$schema" : "http://json-schema.org/draft-07/schema#",
+  "definitions" : {
+    "Constraint" : {
+      "type" : "object",
+      "properties" : {
+        "from" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "message" : {
+          "type" : "string"
+        },
+        "relation" : {
+          "type" : "string",
+          "enum" : [ "deny", "exclusive-allow" ]
+        },
+        "to" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      },
+      "required" : [ "from", "to" ],
+      "additionalProperties" : false
+    },
+    "Group" : {
+      "type" : "object",
+      "properties" : {
+        "description" : {
+          "type" : "string"
+        },
+        "groups" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Group"
+          }
+        },
+        "label" : {
+          "type" : "string"
+        },
+        "patterns" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      },
+      "required" : [ "label" ],
+      "additionalProperties" : false
+    }
+  },
+  "type" : "object",
+  "properties" : {
+    "constraints" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/definitions/Constraint"
+      }
+    },
+    "perspectives" : {
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "constraints" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/Constraint"
+            }
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "groups" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/Group"
+            }
+          },
+          "label" : {
+            "type" : "string"
+          }
+        },
+        "additionalProperties" : false
+      }
+    }
+  },
+  "additionalProperties" : false
+}
